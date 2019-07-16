@@ -1,5 +1,11 @@
 package duckyone2
 
+import (
+	"fmt"
+
+	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
+)
+
 func (c Controller) executeCi(mode string) {
 	switch mode {
 	case "passing":
@@ -16,7 +22,12 @@ func (c Controller) executeCi(mode string) {
 }
 
 func (c Controller) handlePassing() {
-
+	data := map[string]interface{}{
+		"BackRgb":   "1,28,73",
+		"ActiveRgb": "255,255,255",
+		"Steps":     60,
+	}
+	utils.PostJSON(fmt.Sprintf("%s/reactive", colorModeAPI), data)
 }
 
 func (c Controller) handleBroken() {
