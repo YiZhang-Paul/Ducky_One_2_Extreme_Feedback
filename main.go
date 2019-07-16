@@ -21,7 +21,7 @@ func main() {
 		callback = fmt.Sprintf("%s:%s/notify", host, port)
 	)
 	if id, err := subscribe(target, callback); err != nil {
-		log.Fatalf("Subscription failed at: %s. Error: %v\n", target, err)
+		log.Printf("Subscription failed at: %s. Error: %v\n", target, err)
 	} else {
 		log.Printf("Subscription created. ID: %s\n", id)
 	}

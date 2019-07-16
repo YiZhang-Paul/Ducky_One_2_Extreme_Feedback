@@ -1,36 +1,36 @@
 package duckyone2
 
-func (c Controller) executeCd(mode string, data map[string]interface{}) {
+func (c Controller) executeCd(mode string) {
 	switch mode {
 	case "deploying":
-		c.handleDeploying(data)
+		c.handleDeploying()
 	case "pending":
-		c.handlePending(data)
+		c.handlePending()
 	case "deploy-broken":
-		c.handleDeployBroken(data)
+		c.handleDeployBroken()
 	case "deployed":
-		c.handleDeployed(data)
+		c.handleDeployed()
 	case "deploy-failed":
-		c.handleDeployFailed(data)
+		c.handleDeployFailed()
 	}
 }
 
-func (c Controller) handleDeploying(data map[string]interface{}) {
+func (c Controller) handleDeploying() {
 
 }
 
-func (c Controller) handlePending(data map[string]interface{}) {
+func (c Controller) handlePending() {
 
 }
 
-func (c Controller) handleDeployBroken(data map[string]interface{}) {
+func (c Controller) handleDeployBroken() {
 
 }
 
-func (c Controller) handleDeployed(data map[string]interface{}) {
+func (c Controller) handleDeployed() {
 
 }
 
-func (c Controller) handleDeployFailed(data map[string]interface{}) {
+func (c Controller) handleDeployFailed() {
 
 }

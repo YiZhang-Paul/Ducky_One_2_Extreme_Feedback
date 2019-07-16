@@ -28,8 +28,8 @@ func (c Controller) Execute(meta NotificationMeta) {
 		return
 	}
 	if meta.Event == "ci" {
-		c.executeCi(meta.Mode, data)
+		c.executeCi(meta.Mode)
 	} else if meta.Event == "cd" {
-		c.executeCd(meta.Mode, data)
+		c.executeCd(meta.Mode)
 	}
 }
