@@ -10,6 +10,7 @@ import (
 
 var (
 	engineHost      = os.Getenv("ENGINE_HOST")
+	currentState    = ""
 	colorModeAPI    = fmt.Sprintf("%s/colorMode", engineHost)
 	reactiveModeAPI = fmt.Sprintf("%s/reactive", colorModeAPI)
 	blinkModeAPI    = fmt.Sprintf("%s/blink", colorModeAPI)

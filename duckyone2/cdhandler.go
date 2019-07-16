@@ -2,15 +2,15 @@ package duckyone2
 
 func (c Controller) executeCd(mode string) {
 	switch mode {
-	case "deploying":
+	case Deploying:
 		c.handleDeploying()
-	case "pending":
+	case Pending:
 		c.handlePending()
-	case "deploy-broken":
+	case DeployBroken:
 		c.handleDeployBroken()
-	case "deployed":
+	case Deployed:
 		c.handleDeployed()
-	case "deploy-failed":
+	case DeployFailed:
 		c.handleDeployFailed()
 	}
 }

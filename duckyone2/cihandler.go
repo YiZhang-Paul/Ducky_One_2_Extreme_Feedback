@@ -6,37 +6,48 @@ import (
 
 func (c Controller) executeCi(mode string) {
 	switch mode {
-	case "passing":
+	case Passing:
 		c.handlePassing()
-	case "broken":
+	case Broken:
 		c.handleBroken()
-	case "building":
+	case Building:
 		c.handleBuilding()
-	case "built":
+	case Built:
 		c.handleBuilt()
-	case "build-failed":
+	case BuildFailed:
 		c.handleBuildFailed()
 	}
 }
 
 func (c Controller) handlePassing() {
+	if currentState == Passing {
+		return
+	}
 	data := map[string]interface{}{
 		"BackRgb":   "1,28,73",
 		"ActiveRgb": "255,255,255",
 		"Steps":     60,
 	}
 	utils.PostJSON(reactiveModeAPI, data)
+	currentState = Passing
 }
 
 func (c Controller) handleBroken() {
+	if currentState == Broken {
+		return
+	}
 	data := map[string]interface{}{
 		"BackRgb":  "255,0,0",
 		"Interval": 550,
 	}
 	utils.PostJSON(blinkModeAPI, data)
+	currentState = Broken
 }
 
 func (c Controller) handleBuilding() {
+	if currentState == Building {
+		return
+	}
 	data := map[string]interface{}{
 		"BackRgb":    "255,0,255",
 		"InnerRgb":   "0,255,225",
@@ -45,6 +56,7 @@ func (c Controller) handleBuilding() {
 		"OuterSpeed": 55,
 	}
 	utils.PostJSON(progressModeAPI, data)
+	currentState = Building
 }
 
 func (c Controller) handleBuilt() {
