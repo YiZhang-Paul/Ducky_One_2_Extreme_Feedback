@@ -9,8 +9,10 @@ import (
 )
 
 var (
-	engineHost   = os.Getenv("ENGINE_HOST")
-	colorModeAPI = fmt.Sprintf("%s/colorMode", engineHost)
+	engineHost      = os.Getenv("ENGINE_HOST")
+	colorModeAPI    = fmt.Sprintf("%s/colorMode", engineHost)
+	reactiveModeAPI = fmt.Sprintf("%s/reactive", colorModeAPI)
+	blinkModeAPI    = fmt.Sprintf("%s/blink", colorModeAPI)
 )
 
 // NotificationMeta contains required information from ci/cd services

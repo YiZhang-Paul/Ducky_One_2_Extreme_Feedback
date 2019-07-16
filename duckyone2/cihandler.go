@@ -1,8 +1,6 @@
 package duckyone2
 
 import (
-	"fmt"
-
 	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
 )
 
@@ -27,11 +25,15 @@ func (c Controller) handlePassing() {
 		"ActiveRgb": "255,255,255",
 		"Steps":     60,
 	}
-	utils.PostJSON(fmt.Sprintf("%s/reactive", colorModeAPI), data)
+	utils.PostJSON(reactiveModeAPI, data)
 }
 
 func (c Controller) handleBroken() {
-
+	data := map[string]interface{}{
+		"BackRgb":  "255,0,0",
+		"Interval": 550,
+	}
+	utils.PostJSON(blinkModeAPI, data)
 }
 
 func (c Controller) handleBuilding() {
