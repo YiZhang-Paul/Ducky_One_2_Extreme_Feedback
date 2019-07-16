@@ -13,6 +13,7 @@ var (
 	colorModeAPI    = fmt.Sprintf("%s/colorMode", engineHost)
 	reactiveModeAPI = fmt.Sprintf("%s/reactive", colorModeAPI)
 	blinkModeAPI    = fmt.Sprintf("%s/blink", colorModeAPI)
+	progressModeAPI = fmt.Sprintf("%s/progress", colorModeAPI)
 )
 
 // NotificationMeta contains required information from ci/cd services

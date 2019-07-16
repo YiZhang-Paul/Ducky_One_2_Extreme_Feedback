@@ -37,7 +37,14 @@ func (c Controller) handleBroken() {
 }
 
 func (c Controller) handleBuilding() {
-
+	data := map[string]interface{}{
+		"BackRgb":    "255,0,255",
+		"InnerRgb":   "0,255,225",
+		"OuterRgb":   "255,99,71",
+		"InnerSpeed": 25,
+		"OuterSpeed": 55,
+	}
+	utils.PostJSON(progressModeAPI, data)
 }
 
 func (c Controller) handleBuilt() {
