@@ -1,14 +1,17 @@
 package duckyone2
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	// auto load .env variables
 	_ "github.com/joho/godotenv/autoload"
 )
 
-var engineHost = os.Getenv("ENGINE_HOST")
+var (
+	engineHost   = os.Getenv("ENGINE_HOST")
+	colorModeAPI = fmt.Sprintf("%s/colorMode", engineHost)
+)
 
 // NotificationMeta contains required information from ci/cd services
 type NotificationMeta struct {
@@ -22,11 +25,6 @@ type Controller struct{}
 
 // Execute receives data from ci/cd services and controls devices to provide feedbacks on received data
 func (c Controller) Execute(meta NotificationMeta) {
-	data, ok := meta.Data.(map[string]interface{})
-	if !ok {
-		log.Println("Invalid notification format.")
-		return
-	}
 	if meta.Event == "ci" {
 		c.executeCi(meta.Mode)
 	} else if meta.Event == "cd" {
