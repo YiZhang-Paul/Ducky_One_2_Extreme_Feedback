@@ -1,6 +1,8 @@
 package duckyone2
 
 import (
+	"time"
+
 	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
 )
 
@@ -14,13 +16,11 @@ func (c Controller) executeCi(mode string) {
 		c.handleBuilding()
 	case Built:
 		c.handleBuilt()
-	case BuildFailed:
-		c.handleBuildFailed()
 	}
 }
 
 func (c Controller) handlePassing() {
-	if currentState == Passing {
+	if currentState == Passing || !canChangeState {
 		return
 	}
 	data := map[string]interface{}{
@@ -33,7 +33,7 @@ func (c Controller) handlePassing() {
 }
 
 func (c Controller) handleBroken() {
-	if currentState == Broken {
+	if currentState == Broken || !canChangeState {
 		return
 	}
 	data := map[string]interface{}{
@@ -45,7 +45,7 @@ func (c Controller) handleBroken() {
 }
 
 func (c Controller) handleBuilding() {
-	if currentState == Building {
+	if currentState == Building || !canChangeState {
 		return
 	}
 	data := map[string]interface{}{
@@ -60,9 +60,18 @@ func (c Controller) handleBuilding() {
 }
 
 func (c Controller) handleBuilt() {
-
-}
-
-func (c Controller) handleBuildFailed() {
-
+	if currentState == Built || !canChangeState {
+		return
+	}
+	data := map[string]interface{}{
+		"BackRgb":  "0,255,0",
+		"Interval": 350,
+	}
+	utils.PostJSON(blinkModeAPI, data)
+	currentState = Built
+	canChangeState = false
+	select {
+	case <-time.After(time.Millisecond * 3500):
+		canChangeState = true
+	}
 }

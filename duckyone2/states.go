@@ -2,11 +2,10 @@ package duckyone2
 
 // ci states
 const (
-	Passing     = "passing"
-	Broken      = "broken"
-	Building    = "building"
-	Built       = "built"
-	BuildFailed = "build-failed"
+	Passing  = "passing"
+	Broken   = "broken"
+	Building = "building"
+	Built    = "built"
 )
 
 // cd states
