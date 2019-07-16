@@ -6,15 +6,16 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/yi-zhang/rival-710-extreme-feedback/controls"
-	"github.com/yi-zhang/rival-710-extreme-feedback/utils"
+	"github.com/yi-zhang/ducky-one-2-extreme-feedback/duckyone2"
+	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
 
 var (
-	router = chi.NewRouter()
+	router     = chi.NewRouter()
+	controller = duckyone2.Controller{}
 )
 
 func init() {
@@ -33,12 +34,13 @@ func getRoutes() *chi.Mux {
 		if !ok {
 			return
 		}
-		meta := controls.NotificationMeta{
+		meta := duckyone2.NotificationMeta{
 			Event: fmt.Sprint(body["event"]),
 			Mode:  fmt.Sprint(body["mode"]),
 			Data:  body["data"],
 		}
 		log.Print(meta)
+		controller.Execute(meta)
 	})
 	return router
 }
