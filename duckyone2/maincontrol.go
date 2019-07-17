@@ -14,7 +14,8 @@ var (
 	canChangeState  = true
 	colorModeAPI    = fmt.Sprintf("%s/colorMode", engineHost)
 	reactiveModeAPI = fmt.Sprintf("%s/reactive", colorModeAPI)
-	blinkModeAPI    = fmt.Sprintf("%s/blink", colorModeAPI)
+	shiftModeAPI    = fmt.Sprintf("%s/shift", colorModeAPI)
+	waveModeAPI     = fmt.Sprintf("%s/wave", colorModeAPI)
 	progressModeAPI = fmt.Sprintf("%s/progress", colorModeAPI)
 )
 

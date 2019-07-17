@@ -37,10 +37,10 @@ func (c Controller) handleBroken() {
 		return
 	}
 	data := map[string]interface{}{
-		"BackRgb":  "255,0,0",
+		"BackRgbs": "255,0,0|55,55,55",
 		"Interval": 550,
 	}
-	utils.PostJSON(blinkModeAPI, data)
+	utils.PostJSON(shiftModeAPI, data)
 	currentState = Broken
 }
 
@@ -64,14 +64,14 @@ func (c Controller) handleBuilt() {
 		return
 	}
 	data := map[string]interface{}{
-		"BackRgb":  "0,255,0",
-		"Interval": 350,
+		"BackRgb": "50,155,100",
+		"WaveRgb": "0,255,0",
 	}
-	utils.PostJSON(blinkModeAPI, data)
+	utils.PostJSON(waveModeAPI, data)
 	currentState = Built
 	canChangeState = false
 	select {
-	case <-time.After(time.Millisecond * 3500):
+	case <-time.After(time.Millisecond * 5000):
 		canChangeState = true
 	}
 }
