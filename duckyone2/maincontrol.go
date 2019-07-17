@@ -15,6 +15,7 @@ var (
 	colorModeAPI    = fmt.Sprintf("%s/colorMode", engineHost)
 	reactiveModeAPI = fmt.Sprintf("%s/reactive", colorModeAPI)
 	shiftModeAPI    = fmt.Sprintf("%s/shift", colorModeAPI)
+	sprintModeAPI   = fmt.Sprintf("%s/sprint", colorModeAPI)
 	waveModeAPI     = fmt.Sprintf("%s/wave", colorModeAPI)
 	progressModeAPI = fmt.Sprintf("%s/progress", colorModeAPI)
 )

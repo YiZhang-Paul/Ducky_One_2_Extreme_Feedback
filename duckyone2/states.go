@@ -14,5 +14,4 @@ const (
 	Pending      = "pending"
 	DeployBroken = "deploy-broken"
 	Deployed     = "deployed"
-	DeployFailed = "deploy-failed"
 )
