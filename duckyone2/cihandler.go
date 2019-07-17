@@ -1,11 +1,5 @@
 package duckyone2
 
-import (
-	"time"
-
-	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
-)
-
 func (c Controller) executeCi(mode string) {
 	switch mode {
 	case Passing:
@@ -20,34 +14,23 @@ func (c Controller) executeCi(mode string) {
 }
 
 func (c Controller) handlePassing() {
-	if currentState == Passing || !canChangeState {
-		return
-	}
 	data := map[string]interface{}{
 		"BackRgb":   "1,28,73",
 		"ActiveRgb": "255,255,255",
 		"Steps":     60,
 	}
-	utils.PostJSON(reactiveModeAPI, data)
-	currentState = Passing
+	setState(Passing, reactiveModeAPI, data)
 }
 
 func (c Controller) handleBroken() {
-	if currentState == Broken || !canChangeState {
-		return
-	}
 	data := map[string]interface{}{
 		"BackRgbs": "255,0,0|55,55,55",
 		"Interval": 550,
 	}
-	utils.PostJSON(shiftModeAPI, data)
-	currentState = Broken
+	setState(Broken, shiftModeAPI, data)
 }
 
 func (c Controller) handleBuilding() {
-	if currentState == Building || !canChangeState {
-		return
-	}
 	data := map[string]interface{}{
 		"BackRgb":    "255,0,255",
 		"InnerRgb":   "0,255,225",
@@ -55,23 +38,14 @@ func (c Controller) handleBuilding() {
 		"InnerSpeed": 25,
 		"OuterSpeed": 55,
 	}
-	utils.PostJSON(progressModeAPI, data)
-	currentState = Building
+	setState(Building, progressModeAPI, data)
 }
 
 func (c Controller) handleBuilt() {
-	if currentState == Built || !canChangeState {
-		return
-	}
 	data := map[string]interface{}{
 		"BackRgb": "50,155,100",
 		"WaveRgb": "0,255,0",
 	}
-	utils.PostJSON(waveModeAPI, data)
-	currentState = Built
-	canChangeState = false
-	select {
-	case <-time.After(time.Millisecond * 5000):
-		canChangeState = true
-	}
+	setState(Built, waveModeAPI, data)
+	lockStateChange(5000)
 }
