@@ -13,8 +13,6 @@ import (
 
 var (
 	engineHost      = os.Getenv("ENGINE_HOST")
-	currentState    = ""
-	canChangeState  = true
 	colorModeAPI    = fmt.Sprintf("%s/colorMode", engineHost)
 	reactiveModeAPI = fmt.Sprintf("%s/reactive", colorModeAPI)
 	shiftModeAPI    = fmt.Sprintf("%s/shift", colorModeAPI)
@@ -31,10 +29,20 @@ type NotificationMeta struct {
 }
 
 // Controller is the main control for device illumination
-type Controller struct{}
+type Controller struct {
+	state          string
+	canChangeState bool
+}
+
+// NewController creates a new controller and sets default values
+func NewController() *Controller {
+	return &Controller{
+		canChangeState: true,
+	}
+}
 
 // Execute receives data from ci/cd services and controls devices to provide feedbacks on received data
-func (c Controller) Execute(meta NotificationMeta) {
+func (c *Controller) Execute(meta NotificationMeta) {
 	if meta.Event == "ci" {
 		c.executeCi(meta.Mode)
 	} else if meta.Event == "cd" {
@@ -42,18 +50,18 @@ func (c Controller) Execute(meta NotificationMeta) {
 	}
 }
 
-func lockStateChange(milliseconds int) {
-	canChangeState = false
+func (c *Controller) lockStateChange(milliseconds int) {
+	c.canChangeState = false
 	select {
 	case <-time.After(time.Duration(milliseconds) * time.Millisecond):
-		canChangeState = true
+		c.canChangeState = true
 	}
 }
 
-func setState(state, api string, data map[string]interface{}) {
-	if currentState == state || !canChangeState {
+func (c *Controller) setState(state, api string, data map[string]interface{}) {
+	if c.state == state || !c.canChangeState {
 		return
 	}
 	utils.PostJSON(api, data)
-	currentState = state
+	c.state = state
 }

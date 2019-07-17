@@ -15,7 +15,7 @@ import (
 
 var (
 	router     = chi.NewRouter()
-	controller = duckyone2.Controller{}
+	controller = duckyone2.NewController()
 )
 
 func init() {

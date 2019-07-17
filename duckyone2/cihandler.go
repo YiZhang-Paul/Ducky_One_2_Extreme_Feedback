@@ -1,6 +1,6 @@
 package duckyone2
 
-func (c Controller) executeCi(mode string) {
+func (c *Controller) executeCi(mode string) {
 	switch mode {
 	case Passing:
 		c.handlePassing()
@@ -13,24 +13,24 @@ func (c Controller) executeCi(mode string) {
 	}
 }
 
-func (c Controller) handlePassing() {
+func (c *Controller) handlePassing() {
 	data := map[string]interface{}{
 		"BackRgb":   "1,28,73",
 		"ActiveRgb": "255,255,255",
 		"Steps":     60,
 	}
-	setState(Passing, reactiveModeAPI, data)
+	c.setState(Passing, reactiveModeAPI, data)
 }
 
-func (c Controller) handleBroken() {
+func (c *Controller) handleBroken() {
 	data := map[string]interface{}{
 		"BackRgbs": "255,0,0|55,55,55",
 		"Interval": 550,
 	}
-	setState(Broken, shiftModeAPI, data)
+	c.setState(Broken, shiftModeAPI, data)
 }
 
-func (c Controller) handleBuilding() {
+func (c *Controller) handleBuilding() {
 	data := map[string]interface{}{
 		"BackRgb":    "255,0,255",
 		"InnerRgb":   "0,255,225",
@@ -38,14 +38,14 @@ func (c Controller) handleBuilding() {
 		"InnerSpeed": 25,
 		"OuterSpeed": 55,
 	}
-	setState(Building, progressModeAPI, data)
+	c.setState(Building, progressModeAPI, data)
 }
 
-func (c Controller) handleBuilt() {
+func (c *Controller) handleBuilt() {
 	data := map[string]interface{}{
 		"BackRgb": "50,155,100",
 		"WaveRgb": "0,255,0",
 	}
-	setState(Built, waveModeAPI, data)
-	lockStateChange(5000)
+	c.setState(Built, waveModeAPI, data)
+	c.lockStateChange(5000)
 }
