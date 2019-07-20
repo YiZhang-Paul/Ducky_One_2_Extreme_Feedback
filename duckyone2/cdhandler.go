@@ -15,27 +15,34 @@ func (c *Controller) executeCd(mode string) {
 
 func (c *Controller) handleDeploying() {
 	data := map[string]interface{}{
-		"BackRgb":   "185,0,185",
+		"BackRgb":   "149,0,149",
+		"DropRgb":   "229,0,229",
 		"SprintRgb": "0,0,255",
-		"Speed":     30,
+		"Speed":     45,
 	}
 	c.setState(Deploying, sprintModeAPI, data)
 }
 
 func (c *Controller) handlePending() {
 	data := map[string]interface{}{
-		"BackRgbs": "138,43,226|55,55,55",
-		"Interval": 800,
+		"BackRgb":     "55,55,55",
+		"BlinkRgb":    "138,43,226",
+		"SpecialRgb":  "138,43,226",
+		"SpecialKeys": make([]string, 0),
+		"Interval":    850,
 	}
-	c.setState(Pending, shiftModeAPI, data)
+	c.setState(Pending, blinkModeAPI, data)
 }
 
 func (c *Controller) handleDeployBroken() {
 	data := map[string]interface{}{
-		"BackRgbs": "112,128,144|55,55,55",
-		"Interval": 550,
+		"BackRgb":     "55,55,55",
+		"BlinkRgb":    "112,128,144",
+		"SpecialRgb":  "112,128,144",
+		"SpecialKeys": make([]string, 0),
+		"Interval":    550,
 	}
-	c.setState(DeployBroken, shiftModeAPI, data)
+	c.setState(DeployBroken, blinkModeAPI, data)
 }
 
 func (c *Controller) handleDeployed() {
@@ -44,5 +51,5 @@ func (c *Controller) handleDeployed() {
 		"WaveRgb": "0,0,255",
 	}
 	c.setState(Deployed, waveModeAPI, data)
-	c.lockStateChange(5000)
+	c.lockStateChange(10000)
 }

@@ -2,6 +2,7 @@ package duckyone2
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -15,7 +16,7 @@ var (
 	engineHost      = os.Getenv("ENGINE_HOST")
 	colorModeAPI    = fmt.Sprintf("%s/colorMode", engineHost)
 	reactiveModeAPI = fmt.Sprintf("%s/reactive", colorModeAPI)
-	shiftModeAPI    = fmt.Sprintf("%s/shift", colorModeAPI)
+	blinkModeAPI    = fmt.Sprintf("%s/blink", colorModeAPI)
 	sprintModeAPI   = fmt.Sprintf("%s/sprint", colorModeAPI)
 	waveModeAPI     = fmt.Sprintf("%s/wave", colorModeAPI)
 	progressModeAPI = fmt.Sprintf("%s/progress", colorModeAPI)
@@ -43,8 +44,13 @@ func NewController() *Controller {
 
 // Execute receives data from ci/cd services and controls devices to provide feedbacks on received data
 func (c *Controller) Execute(meta NotificationMeta) {
+	data, ok := meta.Data.(map[string]interface{})
+	if !ok {
+		log.Println("Invalid notification format.")
+		return
+	}
 	if meta.Event == "ci" {
-		c.executeCi(meta.Mode)
+		c.executeCi(meta.Mode, data)
 	} else if meta.Event == "cd" {
 		c.executeCd(meta.Mode)
 	}
@@ -64,4 +70,12 @@ func (c *Controller) setState(state, api string, data map[string]interface{}) {
 	}
 	utils.PostJSON(api, data)
 	c.state = state
+}
+
+func digitToKey(digit float64) string {
+	value := int(digit)
+	if value < 0 || value > 9 {
+		return "D0"
+	}
+	return fmt.Sprintf("D%d", value)
 }

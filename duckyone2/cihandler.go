@@ -1,11 +1,17 @@
 package duckyone2
 
-func (c *Controller) executeCi(mode string) {
+import (
+	"log"
+
+	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
+)
+
+func (c *Controller) executeCi(mode string, data map[string]interface{}) {
 	switch mode {
 	case Passing:
 		c.handlePassing()
 	case Broken:
-		c.handleBroken()
+		c.handleBroken(data)
 	case Building:
 		c.handleBuilding()
 	case Built:
@@ -22,21 +28,27 @@ func (c *Controller) handlePassing() {
 	c.setState(Passing, reactiveModeAPI, data)
 }
 
-func (c *Controller) handleBroken() {
-	data := map[string]interface{}{
-		"BackRgbs": "255,0,0|55,55,55",
-		"Interval": 550,
+func (c *Controller) handleBroken(data map[string]interface{}) {
+	total, ok := utils.FloatFromMap(data, "total")
+	if !ok {
+		log.Print("Missing total number of broken builds.")
+		return
 	}
-	c.setState(Broken, shiftModeAPI, data)
+	data = map[string]interface{}{
+		"BackRgb":     "55,55,55",
+		"BlinkRgb":    "255,99,71",
+		"SpecialRgb":  "255,99,71",
+		"SpecialKeys": []string{digitToKey(total)},
+		"Interval":    550,
+	}
+	c.setState(Broken, blinkModeAPI, data)
 }
 
 func (c *Controller) handleBuilding() {
 	data := map[string]interface{}{
-		"BackRgb":    "255,0,255",
-		"InnerRgb":   "0,255,225",
-		"OuterRgb":   "255,99,71",
-		"InnerSpeed": 25,
-		"OuterSpeed": 55,
+		"BackRgb":     "255,0,255",
+		"ProgressRgb": "0,255,225",
+		"Speed":       25,
 	}
 	c.setState(Building, progressModeAPI, data)
 }
@@ -47,5 +59,5 @@ func (c *Controller) handleBuilt() {
 		"WaveRgb": "0,255,0",
 	}
 	c.setState(Built, waveModeAPI, data)
-	c.lockStateChange(5000)
+	c.lockStateChange(10000)
 }
