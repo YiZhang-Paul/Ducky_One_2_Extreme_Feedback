@@ -26,8 +26,8 @@ func (c *Controller) handleDeploying() {
 func (c *Controller) handlePending() {
 	data := map[string]interface{}{
 		"BackRgb":     "55,55,55",
-		"BlinkRgb":    "138,43,226",
-		"SpecialRgb":  "138,43,226",
+		"BlinkRgb":    "112,128,144",
+		"SpecialRgb":  "112,128,144",
 		"SpecialKeys": make([]string, 0),
 		"Interval":    850,
 	}
@@ -37,8 +37,8 @@ func (c *Controller) handlePending() {
 func (c *Controller) handleDeployBroken() {
 	data := map[string]interface{}{
 		"BackRgb":     "55,55,55",
-		"BlinkRgb":    "112,128,144",
-		"SpecialRgb":  "112,128,144",
+		"BlinkRgb":    "138,43,226",
+		"SpecialRgb":  "138,43,226",
 		"SpecialKeys": make([]string, 0),
 		"Interval":    550,
 	}
@@ -47,7 +47,7 @@ func (c *Controller) handleDeployBroken() {
 
 func (c *Controller) handleDeployed() {
 	data := map[string]interface{}{
-		"BackRgb": "135,206,235",
+		"BackRgb": "30,68,123",
 		"WaveRgb": "0,0,255",
 	}
 	c.setState(Deployed, waveModeAPI, data)
