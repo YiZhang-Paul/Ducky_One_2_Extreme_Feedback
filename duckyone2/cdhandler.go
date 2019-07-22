@@ -18,7 +18,7 @@ func (c *Controller) handleDeploying() {
 		"BackRgb":   "149,0,149",
 		"DropRgb":   "229,0,229",
 		"SprintRgb": "0,0,255",
-		"Speed":     45,
+		"Speed":     75,
 	}
 	c.setState(Deploying, sprintModeAPI, data)
 }

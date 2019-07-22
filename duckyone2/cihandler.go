@@ -23,7 +23,7 @@ func (c *Controller) handlePassing() {
 	data := map[string]interface{}{
 		"BackRgb":   "1,28,73",
 		"ActiveRgb": "255,255,255",
-		"Steps":     60,
+		"Steps":     15,
 	}
 	c.setState(Passing, reactiveModeAPI, data)
 }
@@ -48,7 +48,7 @@ func (c *Controller) handleBuilding() {
 	data := map[string]interface{}{
 		"BackRgb":     "255,0,255",
 		"ProgressRgb": "0,255,225",
-		"Speed":       25,
+		"Speed":       70,
 	}
 	c.setState(Building, progressModeAPI, data)
 }
