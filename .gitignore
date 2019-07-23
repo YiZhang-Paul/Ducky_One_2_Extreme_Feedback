@@ -1,3 +1,4 @@
 **/*.env
 **/note.txt
 **/*.exe
+**/*.zip
