@@ -2,8 +2,24 @@ package duckyone2
 
 import (
 	"log"
+	"os"
 
 	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
+
+	// load color settings
+	_ "github.com/joho/godotenv/autoload"
+)
+
+var (
+	passingBackRgb      = os.Getenv("PASSING_BACK_RGB")
+	passingActiveRgb    = os.Getenv("PASSING_ACTIVE_RGB")
+	brokenBackRgb       = os.Getenv("BROKEN_BACK_RGB")
+	brokenBlinkRgb      = os.Getenv("BROKEN_BLINK_RGB")
+	brokenSpecialRgb    = os.Getenv("BROKEN_SPECIAL_RGB")
+	buildingBackRgb     = os.Getenv("BUILDING_BACK_RGB")
+	buildingProgressRgb = os.Getenv("BUILDING_PROGRESS_RGB")
+	builtBackRgb        = os.Getenv("BUILT_BACK_RGB")
+	builtWaveRgb        = os.Getenv("BUILT_WAVE_RGB")
 )
 
 func (c *Controller) executeCi(mode string, data map[string]interface{}) {
@@ -21,8 +37,8 @@ func (c *Controller) executeCi(mode string, data map[string]interface{}) {
 
 func (c *Controller) handlePassing() {
 	data := map[string]interface{}{
-		"BackRgb":   "1,28,73",
-		"ActiveRgb": "255,255,255",
+		"BackRgb":   passingBackRgb,
+		"ActiveRgb": passingActiveRgb,
 		"Steps":     15,
 	}
 	c.setState(Passing, reactiveModeAPI, data)
@@ -35,9 +51,9 @@ func (c *Controller) handleBroken(data map[string]interface{}) {
 		return
 	}
 	data = map[string]interface{}{
-		"BackRgb":     "55,55,55",
-		"BlinkRgb":    "255,99,71",
-		"SpecialRgb":  "255,99,71",
+		"BackRgb":     brokenBackRgb,
+		"BlinkRgb":    brokenBlinkRgb,
+		"SpecialRgb":  brokenSpecialRgb,
 		"SpecialKeys": []string{digitToKey(total)},
 		"Interval":    550,
 	}
@@ -46,8 +62,8 @@ func (c *Controller) handleBroken(data map[string]interface{}) {
 
 func (c *Controller) handleBuilding() {
 	data := map[string]interface{}{
-		"BackRgb":     "255,0,255",
-		"ProgressRgb": "0,255,225",
+		"BackRgb":     buildingBackRgb,
+		"ProgressRgb": buildingProgressRgb,
 		"Speed":       70,
 	}
 	c.setState(Building, progressModeAPI, data)
@@ -55,8 +71,8 @@ func (c *Controller) handleBuilding() {
 
 func (c *Controller) handleBuilt() {
 	data := map[string]interface{}{
-		"BackRgb": "50,155,100",
-		"WaveRgb": "0,255,0",
+		"BackRgb": builtBackRgb,
+		"WaveRgb": builtWaveRgb,
 	}
 	c.setState(Built, waveModeAPI, data)
 	c.lockStateChange(10000)

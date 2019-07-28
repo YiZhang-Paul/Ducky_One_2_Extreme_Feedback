@@ -1,5 +1,26 @@
 package duckyone2
 
+import (
+	"os"
+
+	// load color settings
+	_ "github.com/joho/godotenv/autoload"
+)
+
+var (
+	deployingBackRgb       = os.Getenv("DEPLOYING_BACK_RGB")
+	deployingDropRgb       = os.Getenv("DEPLOYING_DROP_RGB")
+	deployingSprintRgb     = os.Getenv("DEPLOYING_SPRINT_RGB")
+	pendingBackRgb         = os.Getenv("PENDING_BACK_RGB")
+	pendingBlinkRgb        = os.Getenv("PENDING_BLINK_RGB")
+	pendingSpecialRgb      = os.Getenv("PENDING_SPECIAL_RGB")
+	deployBrokenBackRgb    = os.Getenv("DEPLOY_BROKEN_BACK_RGB")
+	deployBrokenBlinkRgb   = os.Getenv("DEPLOY_BROKEN_BLINK_RGB")
+	deployBrokenSpecialRgb = os.Getenv("DEPLOY_BROKEN_SPECIAL_RGB")
+	deployedBackRgb        = os.Getenv("DEPLOYED_BACK_RGB")
+	deployedWaveRgb        = os.Getenv("DEPLOYED_WAVE_RGB")
+)
+
 func (c *Controller) executeCd(mode string) {
 	switch mode {
 	case Deploying:
@@ -15,9 +36,9 @@ func (c *Controller) executeCd(mode string) {
 
 func (c *Controller) handleDeploying() {
 	data := map[string]interface{}{
-		"BackRgb":   "149,0,149",
-		"DropRgb":   "229,0,229",
-		"SprintRgb": "0,0,255",
+		"BackRgb":   deployingBackRgb,
+		"DropRgb":   deployingDropRgb,
+		"SprintRgb": deployingSprintRgb,
 		"Speed":     75,
 	}
 	c.setState(Deploying, sprintModeAPI, data)
@@ -25,9 +46,9 @@ func (c *Controller) handleDeploying() {
 
 func (c *Controller) handlePending() {
 	data := map[string]interface{}{
-		"BackRgb":     "55,55,55",
-		"BlinkRgb":    "112,128,144",
-		"SpecialRgb":  "112,128,144",
+		"BackRgb":     pendingBackRgb,
+		"BlinkRgb":    pendingBlinkRgb,
+		"SpecialRgb":  pendingSpecialRgb,
 		"SpecialKeys": make([]string, 0),
 		"Interval":    850,
 	}
@@ -36,9 +57,9 @@ func (c *Controller) handlePending() {
 
 func (c *Controller) handleDeployBroken() {
 	data := map[string]interface{}{
-		"BackRgb":     "55,55,55",
-		"BlinkRgb":    "138,43,226",
-		"SpecialRgb":  "138,43,226",
+		"BackRgb":     deployBrokenBackRgb,
+		"BlinkRgb":    deployBrokenBlinkRgb,
+		"SpecialRgb":  deployBrokenSpecialRgb,
 		"SpecialKeys": make([]string, 0),
 		"Interval":    550,
 	}
@@ -47,8 +68,8 @@ func (c *Controller) handleDeployBroken() {
 
 func (c *Controller) handleDeployed() {
 	data := map[string]interface{}{
-		"BackRgb": "30,68,123",
-		"WaveRgb": "0,0,255",
+		"BackRgb": deployedBackRgb,
+		"WaveRgb": deployedWaveRgb,
 	}
 	c.setState(Deployed, waveModeAPI, data)
 	c.lockStateChange(10000)
