@@ -3,6 +3,7 @@ package duckyone2
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/yi-zhang/ducky-one-2-extreme-feedback/utils"
 
@@ -11,15 +12,16 @@ import (
 )
 
 var (
-	passingBackRgb      = os.Getenv("PASSING_BACK_RGB")
-	passingActiveRgb    = os.Getenv("PASSING_ACTIVE_RGB")
-	brokenBackRgb       = os.Getenv("BROKEN_BACK_RGB")
-	brokenBlinkRgb      = os.Getenv("BROKEN_BLINK_RGB")
-	brokenSpecialRgb    = os.Getenv("BROKEN_SPECIAL_RGB")
-	buildingBackRgb     = os.Getenv("BUILDING_BACK_RGB")
-	buildingProgressRgb = os.Getenv("BUILDING_PROGRESS_RGB")
-	builtBackRgb        = os.Getenv("BUILT_BACK_RGB")
-	builtWaveRgb        = os.Getenv("BUILT_WAVE_RGB")
+	passingBackRgb       = os.Getenv("PASSING_BACK_RGB")
+	passingActiveRgb     = os.Getenv("PASSING_ACTIVE_RGB")
+	brokenBackRgb        = os.Getenv("BROKEN_BACK_RGB")
+	brokenBlinkRgb       = os.Getenv("BROKEN_BLINK_RGB")
+	brokenSpecialRgb     = os.Getenv("BROKEN_SPECIAL_RGB")
+	buildingBackRgb      = os.Getenv("BUILDING_BACK_RGB")
+	buildingProgressRgb  = os.Getenv("BUILDING_PROGRESS_RGB")
+	buildingSecondaryRgb = os.Getenv("BUILDING_SECONDARY_RGB")
+	builtBackRgb         = os.Getenv("BUILT_BACK_RGB")
+	builtWaveRgb         = os.Getenv("BUILT_WAVE_RGB")
 )
 
 func (c *Controller) executeCi(mode string, data map[string]interface{}) {
@@ -65,6 +67,9 @@ func (c *Controller) handleBuilding() {
 		"BackRgb":     buildingBackRgb,
 		"ProgressRgb": buildingProgressRgb,
 		"Speed":       70,
+	}
+	if len(buildingSecondaryRgb) > 0 {
+		data["Secondary"] = strings.Split(buildingSecondaryRgb, "|")
 	}
 	c.setState(Building, progressModeAPI, data)
 }
